@@ -49,12 +49,21 @@ button.addEventListener("click", function () {
     const price = document.querySelector('#price').innerText;
 
     let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
+    //console.log(productInLocalStorage);
     if (productInLocalStorage) {
+        productInLocalStorage.push(colorChoice, quantity, price, name);
+        //console.log(productInLocalStorage);
+        localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+        console.log(productInLocalStorage);
 
     } else {
         productInLocalStorage = [];
+        console.log(productInLocalStorage);
         productInLocalStorage.push(colorChoice, quantity, price, name);
+        //console.log(productInLocalStorage);
+        localStorage.setItem("product", JSON.stringify(productInLocalStorage));
         console.log(productInLocalStorage);
     }
 });
-console.log(button);
+//console.log(button);
+
