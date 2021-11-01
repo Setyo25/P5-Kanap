@@ -26,7 +26,7 @@ else {
     for (k = 0; k < productInLocalStorage.length; k++); {
         structureProductsCart = structureProductsCart + `
         <div class="cart__item__img">
-                  <img src="../images/product01.jpg" alt="Photographie d'un canapé">
+                  <img src="$../images/product01.jpg" alt="Photographie d'un canapé">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__titlePrice">

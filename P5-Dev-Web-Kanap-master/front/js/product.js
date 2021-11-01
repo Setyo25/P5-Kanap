@@ -43,13 +43,17 @@ fetch(urlProduct).then((response) =>
 const button = document.querySelector('#addToCart');
 button.addEventListener("click", function () {
 
+    //const id = document.querySelector(".item__content").value;
+    //const photo = document.querySelector(".item__img").value;
+    let id = search_params.get('id');
+
     const colorChoice = document.querySelector('#colors').value;
     const quantity = document.querySelector('#quantity').value;
     const name = document.querySelector('#title').innerText;
     const price = document.querySelector('#price').innerText;
 
     let optionsProduct = {
-        colorChoice, quantity, name, price
+        id, quantity, colorChoice
     }
 
     let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
