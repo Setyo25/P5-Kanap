@@ -48,21 +48,23 @@ button.addEventListener("click", function () {
     const name = document.querySelector('#title').innerText;
     const price = document.querySelector('#price').innerText;
 
+    let optionsProduct = {
+        colorChoice, quantity, name, price
+    }
+
     let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
-    //console.log(productInLocalStorage);
-    if (productInLocalStorage) {
-        productInLocalStorage.push(colorChoice, quantity, price, name);
-        //console.log(productInLocalStorage);
+
+    const addProductLocalStorage = () => {
+        productInLocalStorage.push(optionsProduct);
         localStorage.setItem("product", JSON.stringify(productInLocalStorage));
-        console.log(productInLocalStorage);
+    };
+
+    if (productInLocalStorage) {
+        addProductLocalStorage();
 
     } else {
         productInLocalStorage = [];
-        console.log(productInLocalStorage);
-        productInLocalStorage.push(colorChoice, quantity, price, name);
-        //console.log(productInLocalStorage);
-        localStorage.setItem("product", JSON.stringify(productInLocalStorage));
-        console.log(productInLocalStorage);
+        addProductLocalStorage();
     }
 });
 //console.log(button);
