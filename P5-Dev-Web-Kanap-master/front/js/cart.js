@@ -31,6 +31,8 @@ else {
       <div class="cart__item__content__titlePrice">
         <h2>${product.name}</h2>
         <p>${product.price} €</p>
+        <p>${product.colorChoice}</p>
+
       </div>
       <div class="cart__item__content__settings">
         <div class="cart__item__content__settings__quantity">
@@ -86,8 +88,8 @@ let totalQuantityCalcule = [];
 //Chercher la quantite dans le panier
 
 for (let n = 0; n < productInLocalStorage.length; n++) {
-  let quantityOfProductsInCart = productInLocalStorage[n].quantity;
-
+  let quantityOfProductsInCartString = productInLocalStorage[n].quantity;
+  let quantityOfProductsInCart = parseInt(quantityOfProductsInCartString);
   //total quantite dans le panier
   totalQuantityCalcule.push(quantityOfProductsInCart)
   console.log(totalQuantityCalcule);
@@ -102,7 +104,46 @@ for (let n = 0; n < productInLocalStorage.length; n++) {
   let totalQuantityEnd = document.getElementById("totalQuantity");
   totalQuantityEnd.innerHTML = totalQuantityProducts;
 
-
-
 }
+
+//**************** Formulaire*****************
+
+// AddEventlistener****
+// Selectionner le bouton pour envoyer le formulaire****
+
+//const btnSendFormOrder = document.querySelector("#order");
+//console.log(btnSendFormOrder);
+
+const contact = {
+  firstName: "Heri",
+  lastName: "Setyobudi",
+  address: "2 Rue de Paname",
+  city: "Paris",
+  email: "hstybd@gmail.com"
+}
+
+
+const products = [
+
+];
+console.log(products);
+products.push("chat")
+console.log(products);
+products.push("chien");
+console.log(products);
+
+
+//btnSendFormOrder.addEventListener("click", (e) => {
+  //e.preventDefault();
+
+  //localStorage.setItem("firstName", document.querySelector("firstName").value);
+  //localStorage.setItem("lasttName", document.querySelector("lastName").value);
+
+
+
+//});
+
+
+
+
 

@@ -19,7 +19,7 @@ fetch(urlProduct).then((response) =>
             document.querySelector('#description').innerHTML = data.description;
 
             const color = data.colors;
-            //const optioncolor = color;
+            const optioncolor = color;
             let structureOptions = [];
 
             for (let i = 0; i < color.length; i++) {
@@ -28,29 +28,38 @@ fetch(urlProduct).then((response) =>
             `;
                 console.log(structureOptions);
             }
-            /*const newElt = document.createElement("option")
-            let elt = document.getElementById("colors");
-            elt.appendChild(newElt);
-            */
+
             const choixcouleur = document.querySelector("#colors");
             choixcouleur.innerHTML = structureOptions;
 
-
-
             const button = document.querySelector('#addToCart');
             button.addEventListener("click", function () {
-
-                //const id = document.querySelector(".item__content").value;
-                //const photo = document.querySelector(".item__img").value;
-                //let id = search_params.get('id');
-
-
-
 
                 const colorChoice = document.querySelector('#colors').value;
                 const quantity = document.querySelector('#quantity').value;
 
                 // A mettre dans conditions ..... else
+
+                /*function argumentContientColor() {
+                    return [].includes.call(arguments, 'colors');
+                }
+                console.log(argumentContientColor('color'));
+                */
+
+                //if (localStorage.getItem("products")) {
+                //  productInLocalStorage = JSON.parse(localStorage.getItem("products"));
+                //const idAlreadySelected = productInLocalStorage.filter(products => products.idProduct === products.id);
+                //const colorAlreadySelected = productInLocalStorage.filter(products => products.colorChoice === products.colorChoice);
+                //}
+
+                //for (let product of products) {
+                ///  if (product.colorChoice === colorAlreadySelected.products.colorChoice && products.id === idAlreadySelected.products.id) {
+                //product.quantityChoice = total;
+                //}
+                //}
+
+
+
 
                 let optionsProduct = {
                     idProduct, quantity, colorChoice, name, price, affichagePhoto
@@ -59,8 +68,16 @@ fetch(urlProduct).then((response) =>
                 let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
 
                 const addProductLocalStorage = () => {
+                    //if (idProduct === idProduct && colorChoice === colorChoice) {
+                    //  quantity = total;
+                    //console.log(total);
+                    //}
+                    //else {
+
+
                     productInLocalStorage.push(optionsProduct);
                     localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+                    //}
                 };
 
                 if (productInLocalStorage) {
@@ -70,10 +87,10 @@ fetch(urlProduct).then((response) =>
                     productInLocalStorage = [];
                     addProductLocalStorage();
                 }
+
             });
         })
 );
 
 
-//console.log(button);
 
