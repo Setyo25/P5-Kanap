@@ -12,7 +12,7 @@ fetch(urlProduct).then((response) =>
 
             let name = data.name;
             let price = data.price;
-            let idProduct = data.id;
+            let idProduct = data._id;
 
             document.querySelector('#title').innerHTML = name;
             document.querySelector('#price').innerHTML = price;
@@ -26,7 +26,7 @@ fetch(urlProduct).then((response) =>
                 structureOptions += `
             <option>${color[i]}</option>
             `;
-                console.log(structureOptions);
+
             }
             /*const newElt = document.createElement("option")
             let elt = document.getElementById("colors");
@@ -56,12 +56,28 @@ fetch(urlProduct).then((response) =>
                 };
 
                 if (productInLocalStorage) {
+                    const resultFind = productInLocalStorage.find(
+                        (el) => el.idProduct === optionsProduct.idProduct && el.colorChoice === optionsProduct.colorChoice);
+                    if (resultFind) {
+                        console.log(resultFind);
+                        let newQuantity =
+                            parseInt(optionsProduct.quantity) + parseInt(resultFind.quantity);
+
+                        resultFind.quantity = newQuantity;
+                        console.log(resultFind.quantity);
+                        localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+
+                    }
+                }
+                else (productInLocalStorage) => {
                     addProductLocalStorage();
 
-                } else {
+                }
+                else (productInLocalStorage) => {
                     productInLocalStorage = [];
                     addProductLocalStorage();
                 }
-            });
-        })
-);
+
+
+            })
+        }));
