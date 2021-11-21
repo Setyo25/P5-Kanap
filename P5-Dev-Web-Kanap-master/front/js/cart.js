@@ -25,7 +25,7 @@ else {
     structureProductsCart.innerHTML += `
     <article class="cart__item" data-id="{product-ID}">
     <div class="cart__item__img">
-      ${product.affichagePhoto}
+      <img src= ${product.image} alt= ${product.altTxt}>
     </div>
     <div class="cart__item__content">
       <div class="cart__item__content__titlePrice">

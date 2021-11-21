@@ -14,7 +14,7 @@ fetch(urlProduct).then((response) =>
             let altTxt = data.altTxt;
 
             const affichageItemImg = document.querySelector('.item__img');
-            const affichagePhoto = `<img src="${image}" alt="${altTxt}">`;
+            const affichagePhoto = `<img src="${data.imageUrl}" alt="${data.altTxt}">`;
             affichageItemImg.insertAdjacentHTML('afterbegin', affichagePhoto);
 
             document.querySelector('#title').innerHTML = name;
@@ -97,7 +97,7 @@ fetch(urlProduct).then((response) =>
                         productInLocalStorage.push(optionsProduct);
                     }
 
-                    addProductLocalStorage();
+                    //addProductLocalStorage();
 
                 } else {
                     productInLocalStorage = [];
