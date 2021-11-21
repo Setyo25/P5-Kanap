@@ -41,29 +41,6 @@ fetch(urlProduct).then((response) =>
                 const colorChoice = document.querySelector('#colors').value;
                 const quantity = document.querySelector('#quantity').value;
 
-                // A mettre dans conditions ..... else
-
-                /*function argumentContientColor() {
-                    return [].includes.call(arguments, 'colors');
-                }
-                console.log(argumentContientColor('color'));
-                */
-
-                //if (localStorage.getItem("products")) {
-                //  productInLocalStorage = JSON.parse(localStorage.getItem("products"));
-                //const idAlreadySelected = productInLocalStorage.filter(products => products.idProduct === products.id);
-                //const colorAlreadySelected = productInLocalStorage.filter(products => products.colorChoice === products.colorChoice);
-                //}
-
-                //for (let product of products) {
-                ///  if (product.colorChoice === colorAlreadySelected.products.colorChoice && products.id === idAlreadySelected.products.id) {
-                //product.quantityChoice = total;
-                //}
-                //}
-
-
-
-
                 let optionsProduct = {
                     idProduct, quantity, colorChoice, name, price, image, altTxt
                 }
@@ -71,21 +48,19 @@ fetch(urlProduct).then((response) =>
                 let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
 
                 const addProductLocalStorage = () => {
-                    //if (idProduct === idProduct && colorChoice === colorChoice) {
-                    //  quantity = total;
-                    //console.log(total);
-                    //}
-                    //else {
-
 
                     productInLocalStorage.push(optionsProduct);
                     localStorage.setItem("product", JSON.stringify(productInLocalStorage));
-                    //}
+
                 };
 
                 if (productInLocalStorage) {
+                    productInLocalStorage = [];
+                    productInLocalStorage = JSON.parse(localStorage.getItem("product"));
+
                     const resultFind = productInLocalStorage.find(
                         (el) => el.idProduct === optionsProduct.idProduct && el.colorChoice === optionsProduct.colorChoice);
+
                     if (resultFind) {
                         console.log(resultFind);
                         let newQuantity = parseInt(optionsProduct.quantity) + parseInt(resultFind.quantity);
@@ -94,7 +69,8 @@ fetch(urlProduct).then((response) =>
                         localStorage.setItem("product", JSON.stringify(productInLocalStorage));
                     }
                     else {
-                        productInLocalStorage.push(optionsProduct);
+
+                        addProductLocalStorage();
                     }
 
                     //addProductLocalStorage();
