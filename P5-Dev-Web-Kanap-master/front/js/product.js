@@ -2,17 +2,20 @@ let search_params = new URLSearchParams(window.location.search);
 let id = search_params.get('id');
 
 let urlProduct = (`http://localhost:3000/api/products/${id}`);
+productInLocalStorage = [];
 
 fetch(urlProduct).then((response) =>
     response.json()
         .then((data) => {
-            const affichageItemImg = document.querySelector('.item__img');
-            const affichagePhoto = `<img src="${data.imageUrl}" alt="${data.altTxt}">`;
-            affichageItemImg.insertAdjacentHTML('afterbegin', affichagePhoto);
-
             let name = data.name;
             let price = data.price;
-            let idProduct = data.id;
+            let idProduct = data._id;
+            let image = data.imageUrl;
+            let altTxt = data.altTxt;
+
+            const affichageItemImg = document.querySelector('.item__img');
+            const affichagePhoto = `<img src="${image}" alt="${altTxt}">`;
+            affichageItemImg.insertAdjacentHTML('afterbegin', affichagePhoto);
 
             document.querySelector('#title').innerHTML = name;
             document.querySelector('#price').innerHTML = price;
@@ -62,7 +65,7 @@ fetch(urlProduct).then((response) =>
 
 
                 let optionsProduct = {
-                    idProduct, quantity, colorChoice, name, price, affichagePhoto
+                    idProduct, quantity, colorChoice, name, price, image, altTxt
                 }
 
                 let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
