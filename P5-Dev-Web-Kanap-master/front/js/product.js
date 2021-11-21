@@ -84,6 +84,19 @@ fetch(urlProduct).then((response) =>
                 };
 
                 if (productInLocalStorage) {
+                    const resultFind = productInLocalStorage.find(
+                        (el) => el.idProduct === optionsProduct.idProduct && el.colorChoice === optionsProduct.colorChoice);
+                    if (resultFind) {
+                        console.log(resultFind);
+                        let newQuantity = parseInt(optionsProduct.quantity) + parseInt(resultFind.quantity);
+                        resultFind.quantity = newQuantity;
+                        console.log(resultFind.quantity);
+                        localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+                    }
+                    else {
+                        productInLocalStorage.push(optionsProduct);
+                    }
+
                     addProductLocalStorage();
 
                 } else {
