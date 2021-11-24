@@ -46,6 +46,9 @@ fetch(urlProduct).then((response) =>
                 }
 
                 let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
+                if (!productInLocalStorage) {
+                    productInLocalStorage = []
+                }
 
                 const addProductLocalStorage = () => {
 
@@ -54,31 +57,32 @@ fetch(urlProduct).then((response) =>
 
                 };
 
-                if (productInLocalStorage) {
-                    productInLocalStorage = [];
-                    productInLocalStorage = JSON.parse(localStorage.getItem("product"));
+                //if (productInLocalStorage) {
+                // productInLocalStorage = [];
+                //productInLocalStorage = JSON.parse(localStorage.getItem("product"));
 
-                    const resultFind = productInLocalStorage.find(
-                        (el) => el.idProduct === optionsProduct.idProduct && el.colorChoice === optionsProduct.colorChoice);
+                const resultFind = productInLocalStorage.find((el) =>
+                    el.idProduct === optionsProduct.idProduct &&
+                    el.colorChoice === optionsProduct.colorChoice);
 
-                    if (resultFind) {
-                        console.log(resultFind);
-                        let newQuantity = parseInt(optionsProduct.quantity) + parseInt(resultFind.quantity);
-                        resultFind.quantity = newQuantity;
-                        console.log(resultFind.quantity);
-                        localStorage.setItem("product", JSON.stringify(productInLocalStorage));
-                    }
-                    else {
+                if (resultFind) {
+                    console.log(resultFind);
+                    let newQuantity = parseInt(optionsProduct.quantity) + parseInt(resultFind.quantity);
+                    resultFind.quantity = newQuantity;
+                    console.log(resultFind.quantity);
+                    localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+                }
+                else {
 
-                        addProductLocalStorage();
-                    }
-
-                    //addProductLocalStorage();
-
-                } else {
-                    productInLocalStorage = [];
                     addProductLocalStorage();
                 }
+
+                //addProductLocalStorage();
+
+                //} else {
+                //  productInLocalStorage = [];
+                //addProductLocalStorage();
+                //}
 
             });
         })
