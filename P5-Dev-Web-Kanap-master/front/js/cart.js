@@ -59,6 +59,40 @@ else {
 
 // créer la variable pour mettre le prix total du panier
 
+
+function modifQuantity() {
+  let itemModifQuantity = document.querySelector(".itemQuantity");
+
+  for (let q = 0; q < itemModifQuantity.length; q++) {
+    itemModifQuantity[q].addEvenlistener("change", (event) => {
+      event.preventDefault();
+
+      let quantityModif = productInLocalStorage[q].quantity;
+      let quantityModifValue = quantityModif[q].valueAsNumber;
+
+      const resultFind = productInLocalStorage.find((el) => el.quantityModifValue !== quantityModif);
+
+      resultFind.quantity = quantityModifValue;
+      productInLocalStorage[q].quantity = resultFind.quantity;
+
+      localStorage.setItem("products", JSON.stringify(productInLocalStorage));
+
+      location.reload();
+    })
+  }
+}
+modifQuantity();
+
+
+
+
+
+
+
+
+
+
+
 let totalPriceCalcule = [];
 
 //Chercher les prix dans le panier
@@ -105,6 +139,9 @@ for (let n = 0; n < productInLocalStorage.length; n++) {
   totalQuantityEnd.innerHTML = totalQuantityProducts;
 
 }
+
+
+
 
 //**************** Formulaire*****************
 
