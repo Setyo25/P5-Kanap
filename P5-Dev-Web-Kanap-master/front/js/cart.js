@@ -166,8 +166,121 @@ btnSendFormOrder.addEventListener("click", (e) => {
 
   console.log("formulaireValues");
   console.log(formulaireValues);
-  //Mettre l'objet "formulaireValues" dans le localStorage 
-  localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
+
+  //************************ Validaion du formulaire*******
+
+  //Const message alert :
+
+  const textAlert = (value) => {
+    return `${value}:Les chiffres et les symboles ne sont pas autorisés. Minimum 2 caractères, maximum 30`;
+  }
+
+  const erreurPrenom = document.getElementById("firstNameErrorMsg");
+  const erreurNom = document.getElementById("lastNameErrorMsg");
+  const erreurAdresse = document.getElementById("addressErrorMsg");
+  const erreurVille = document.getElementById("cityErrorMsg");
+  const erreurEmail = document.getElementById("emailErrorMsg");
+
+  //Const regEx***
+
+
+  const regExPrenomNomVille = (value) => {
+    return /^[A-Za-z]{2,30}$/.test(value);
+  }
+
+  const regExAdresse = (value) => {
+    return /^[A-Za-z0-9\s]{2,50}$/.test(value);
+  }
+
+
+  const regExEmail = (value) => {
+    return /[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+  }
+  //********* Function controle formulaire */
+
+  function prenomControle() {
+    //Controle de la validité du prénom
+    const lePrenom = formulaireValues.prenom;
+    if (regExPrenomNomVille(lePrenom)) {
+      return true;
+    } else {
+      alert(textAlert("Prenom"));
+      return false;
+    };
+  }
+  function nomControle() {
+    //Controle de la validité du nom
+    const leNom = formulaireValues.nom;
+    if (regExPrenomNomVille(leNom)) {
+      return true;
+    } else {
+      alert(textAlert("Nom"));
+      return false;
+    };
+  }
+
+  function villeControle() {
+    //Controle de la validité de la ville
+    const laVille = formulaireValues.ville;
+    if (regExPrenomNomVille(laVille)) {
+      return true;
+    } else {
+      alert(textAlert("Ville"));
+      return false;
+    };
+  }
+
+  //Controle de la validité de l'adresse
+  function adresseControle() {
+    const lAdresse = formulaireValues.adresse;
+    if (regExAdresse(lAdresse)) {
+      return true;
+    } else {
+      alert("L'adresse n'est pas correcte");
+      return false;
+    };
+  }
+
+  //Controle de la validité de l'email
+  function emailControle() {
+    const lEmail = formulaireValues.email;
+    if (regExEmail(lEmail)) {
+      return true;
+    } else {
+      alert("L'adresse mail n'est pas correcte")
+      return false;
+    }
+
+  }
+
+
+  if (prenomControle() && nomControle() && emailControle() && villeControle() && adresseControle()) {
+    //Mettre l'objet "formulaireValues" dans le localStorage 
+    localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
+  } else {
+    alert("Veuillez remplir tous les champs du formulaire");
+  }
+
+
+
+  //***************************Fin de validation formularire****************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -220,7 +333,15 @@ document.getElementById("city").value = dataLocalStorageObjet.ville;
 document.getElementById("email").value = dataLocalStorageObjet.email;
 
 
+//Fonction pour remplir directement le champ du formulaire avec les données du local storage si elles existent
 
+//function remplirChampInputDepuisLocalStorage(input) {
+  //document.getElementById(`${input}`).value = dataLocalStorageObjet[input];
+//};
+
+//console.log("remplirchamp");
+//console.log(remplirChampInputDepuisLocalStorage);
+//remplirChampInputDepuisLocalStorage("prenom");
 
 
 
