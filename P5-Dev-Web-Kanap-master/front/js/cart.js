@@ -109,6 +109,37 @@ function modifQuantity() {
 }
 modifQuantity();
 
+//********************** */
+
+function getTotals() {
+
+  // Récupération du total des quantités
+  let elemsQtt = document.getElementsByClassName('itemQuantity');
+  let myLength = elemsQtt.length,
+    totalQtt = 0;
+
+  for (let t = 0; t < myLength; ++t) {
+    totalQtt += elemsQtt[t].valueAsNumber;
+  }
+
+  let productTotalQuantity = document.getElementById('totalQuantity');
+  productTotalQuantity.innerHTML = totalQtt;
+  console.log(totalQtt);
+
+
+  // Récupération du prix total
+  totalPrice = 0;
+
+  for (let t = 0; t < myLength; ++t) {
+    totalPrice += (elemsQtt[t].valueAsNumber * getProductInLocalStorage[t].price);
+  }
+
+  let productTotalPrice = document.getElementById('totalPrice');
+  productTotalPrice.innerHTML = totalPrice;
+  console.log(totalPrice);
+}
+getTotals();
+
 
 /*
 //*************Recherche remove product*************** 
@@ -158,7 +189,7 @@ console.log(remove);
 
 
 
-
+/*
 
 // total quantite dans le panier 
 
@@ -192,7 +223,7 @@ for (let n = 0; n < getProductInLocalStorage.length; n++) {
 
 
 
-
+/*
 
 let totalPriceCalcule = [];
 
@@ -217,6 +248,7 @@ for (let m = 0; m < getProductInLocalStorage.length; m++) {
 
 
 }
+*/
 //}
 
 // Test pour modifier la quantité***
