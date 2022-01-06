@@ -4,6 +4,26 @@ let id = search_params.get('id');
 let urlProduct = (`http://localhost:3000/api/products/${id}`);
 productInLocalStorage = [];
 
+//***test savebasket */
+function saveBasket(basket) {
+    localStorage.setItem("basket", JSON.stringify(basket));
+}
+
+//*** Test function getbasket */
+function getBasket() {
+    return JSON.parse(localStorage.getItem("basket"));
+}
+
+//***  test function addBasket**** */
+function addBasket(product) {
+    let basket = getBasket();
+    basket.push(product);
+}
+
+
+
+
+//*******code déjà fonctionnelle**** */
 fetch(urlProduct).then((response) =>
     response.json()
         .then((data) => {
@@ -44,7 +64,7 @@ fetch(urlProduct).then((response) =>
                 let optionsProduct = {
                     idProduct, quantity, colorChoice, name, price, image, altTxt
                 }
-
+                console.log(optionsProduct);
                 let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
                 if (!productInLocalStorage) {
                     productInLocalStorage = []

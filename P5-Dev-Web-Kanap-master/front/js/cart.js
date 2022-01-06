@@ -1,11 +1,13 @@
-let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
-console.log(productInLocalStorage);
+let getProductInLocalStorage = JSON.parse(localStorage.getItem("product"));
+console.log(getProductInLocalStorage);
+
+
 
 // ID où on va injecter HTML
 const productsInCart = document.querySelector("#cart__items");
 //console.log(productsInCart);
 
-if (productInLocalStorage === null) {
+if (getProductInLocalStorage === null) {
   //Si le panier est vide
   const EmptyCart = `
   
@@ -21,17 +23,17 @@ else {
   //Si le panier est rempli
   let structureProductsCart = document.getElementById("cart__items");
 
-  for (let product of productInLocalStorage) {
+  for (let product of getProductInLocalStorage) {
     structureProductsCart.innerHTML += `
-    <article class="cart__item" data-id="${product._id}">
+    <article class="cart__item" data-id="${product._id}" data-color="${product.colorChoice}">
     <div class="cart__item__img">
       <img src= ${product.image} alt= ${product.altTxt}>
     </div>
     <div class="cart__item__content">
       <div class="cart__item__content__titlePrice">
         <h2>${product.name}</h2>
-        <p>${product.price} €</p>
-        <p>${product.colorChoice}</p>
+        <p>Prix : ${product.price} €</p>
+        <p>Couleur : ${product.colorChoice}</p>
 
       </div>
       <div class="cart__item__content__settings">
@@ -55,45 +57,117 @@ else {
 
 }
 
-// Le montant total du panier****
 
-// créer la variable pour mettre le prix total du panier
 
-/*
-function modifQuantity() {
-  const itemModifQuantity = document.querySelectorAll(".itemQuantity");
+// Suppression d'un produit
+function deleteProduct() {
+  let buttonSupprimer = document.querySelectorAll(".deleteItem");
 
-  for (let itemModifQuantity of productInLocalStorage) {
-    itemModifQuantity.addEvenlistener('change', (event) => {
+  for (let s = 0; s < buttonSupprimer.length; s++) {
+    buttonSupprimer[s].addEventListener("click", (event) => {
       event.preventDefault();
 
-      let quantityModif = productInLocalStorage[q].quantity;
-      let quantityModifValue = quantityModif[q].valueAsNumber;
+      //Selection de l'element à supprimer en fonction de son id ET sa couleur
+      let idDelete = getProductInLocalStorage[s].idProduct;
+      let colorDelete = getProductInLocalStorage[s].colorChoice;
 
-      const resultFind = productInLocalStorage.find((el) => el.quantityModifValue !== quantityModif);
+      getProductInLocalStorage = getProductInLocalStorage.filter(el => el.idProduct !== idDelete || el.colorChoice !== colorDelete);
 
-      resultFind.quantity = quantityModifValue;
-      productInLocalStorage[k].quantity = resultFind.quantity;
+      localStorage.setItem("product", JSON.stringify(getProductInLocalStorage));
 
-      localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+      //Alerte produit supprimé et refresh
+      //alert("Ce produit a bien été supprimé du panier");
+      location.reload();
+    })
+  }
+}
+deleteProduct();
 
+// Modification d'une quantité de produit
+function modifQuantity() {
+  let mdfQtt = document.querySelectorAll(".itemQuantity");
+
+  for (let m = 0; m < mdfQtt.length; m++) {
+    mdfQtt[m].addEventListener("change", (event) => {
+      event.preventDefault();
+
+      //Selection de l'element à modifier en fonction de son id ET sa couleur
+      let quantityModif = getProductInLocalStorage[m].quantity;
+      let qttModifValue = mdfQtt[m].valueAsNumber;
+
+      const resultFind = getProductInLocalStorage.find((el) => el.qttModifValue !== quantityModif);
+
+      resultFind.quantity = qttModifValue;
+      getProductInLocalStorage[m].quantity = resultFind.quantity;
+
+      localStorage.setItem("product", JSON.stringify(getProductInLocalStorage));
+
+      // refresh rapide
       location.reload();
     })
   }
 }
 modifQuantity();
 
+
+/*
+//*************Recherche remove product*************** 
+
+function getBasket() {
+  return JSON.parse(localStorage.getItem("basket"));
+}
+function removeFromBasket(getProductInLocalStorage) {
+  let basket = getBasket();
+  basket = basket.filter(p => idProduct != optionsProduct.idProduct);
+}
+
+const supprimer = document.querySelector('.deleteItem');
+supprimer.addEventListener("click", removeFromBasket());
+
+
 */
+/*
+
+function getBasket() {
+  return localStorage.getItem("product");
+}
+console.log(getBasket());
+
+
+function removeFromBasket(product) {
+  let basket = getBasket();
+  basket = basket.filter(p => p.idProduct != product.idProduct);
+  console.log(basket);
+}
+
+
+let remove = document.querySelector(".deleteItem");
+remove.addEventListener("click", function () {
+  removeFromBasket()
+});
+console.log(remove);
+*/
+
+
+// Le montant total du panier****
+
+// créer la variable pour mettre le prix total du panier
+
+
+
+
+
+
 
 
 // total quantite dans le panier 
 
 let totalQuantityCalcule = [];
-
+//function totalQuantityCalcule(productInLocalStorage) {
 //Chercher la quantite dans le panier
 
-for (let n = 0; n < productInLocalStorage.length; n++) {
-  let quantityOfProductsInCartString = productInLocalStorage[n].quantity;
+for (let n = 0; n < getProductInLocalStorage.length; n++) {
+  let quantityOfProductsInCartString = getProductInLocalStorage[n].quantity;
   let quantityOfProductsInCart = parseInt(quantityOfProductsInCartString);
   //total quantite dans le panier
   totalQuantityCalcule.push(quantityOfProductsInCart)
@@ -110,8 +184,7 @@ for (let n = 0; n < productInLocalStorage.length; n++) {
   totalQuantityEnd.innerHTML = totalQuantityProducts;
 
 }
-
-
+//}
 
 
 
@@ -125,8 +198,10 @@ let totalPriceCalcule = [];
 
 //Chercher les prix dans le panier
 
-for (let m = 0; m < productInLocalStorage.length; m++) {
-  let priceOfProductsInCart = productInLocalStorage[m].price;
+////function totalPriceProducts(productInLocalStorage) {
+
+for (let m = 0; m < getProductInLocalStorage.length; m++) {
+  let priceOfProductsInCart = getProductInLocalStorage[m].price;
 
   //total prix dans le panier
   totalPriceCalcule.push(priceOfProductsInCart)
@@ -142,6 +217,49 @@ for (let m = 0; m < productInLocalStorage.length; m++) {
 
 
 }
+//}
+
+// Test pour modifier la quantité***
+
+/*
+const tagQuantity = document.getElementById("itemQuantity");
+
+console.log("ici tagQuantity");
+console.log(tagQuantity);
+
+tagQuantity.forEach(tag => {
+  const tagClosest = tag.closest("article");
+  let modifQuantity = "";
+  const id = tagClosest.dataset.id;
+  const color = tagClosest.dataset.color;
+  console.log("Ici tagClosest");
+  console.log(tagClosest);
+
+  tag.addEventListener('change', event => {
+    event.preventDefault;
+    modifQuantity = Number(tag.value);
+    productInLocalStorage.forEach(product => {
+      if (product.idProduct == id && product.colorChoice == color) {
+        product.quantity = modifQuantity
+      }
+    })
+    localStorage.setItem("products", JSON.stringify(productInLocalStorage));
+    totalPriceEnd(productInLocalStorage);
+    //totalQuantityEnd(productInLocalStorage);
+  })
+})
+*/
+
+
+// Recheche modif quantité
+/*
+const modifQuantity = document.querySelector(".itemQuantity");
+console.log(modifQuantity);
+array.from(modifQuantity).forEach((element) => {
+  console.log(element);
+});
+*/
+
 
 //**************** Formulaire*****************
 
@@ -204,7 +322,8 @@ btnSendFormOrder.addEventListener("click", (e) => {
     if (regExPrenomNomVille(lePrenom)) {
       return true;
     } else {
-      alert(textAlert("Prenom"));
+      //alert(textAlert("Prenom"));
+      erreurPrenom.innerHTML = "Les chiffres et les symboles ne sont pas autorisés. Minimum 2 caractères, maximum 30";
       return false;
     };
   }
@@ -214,18 +333,8 @@ btnSendFormOrder.addEventListener("click", (e) => {
     if (regExPrenomNomVille(leNom)) {
       return true;
     } else {
-      alert(textAlert("Nom"));
-      return false;
-    };
-  }
-
-  function villeControle() {
-    //Controle de la validité de la ville
-    const laVille = formulaireValues.ville;
-    if (regExPrenomNomVille(laVille)) {
-      return true;
-    } else {
-      alert(textAlert("Ville"));
+      //alert(textAlert("Nom"));
+      erreurNom.innerHTML = "Les chiffres et les symboles ne sont pas autorisés. Minimum 2 caractères, maximum 30";
       return false;
     };
   }
@@ -236,10 +345,25 @@ btnSendFormOrder.addEventListener("click", (e) => {
     if (regExAdresse(lAdresse)) {
       return true;
     } else {
-      alert("L'adresse n'est pas correcte");
+      //alert("L'adresse n'est pas correcte");
+      erreurAdresse.innerHTML = "L'adresse n'est pas correcte";
       return false;
     };
   }
+
+  function villeControle() {
+    //Controle de la validité de la ville
+    const laVille = formulaireValues.ville;
+    if (regExPrenomNomVille(laVille)) {
+      return true;
+    } else {
+      //alert(textAlert("Ville"));
+      erreurVille.innerHTML = "Les chiffres et les symboles ne sont pas autorisés. Minimum 2 caractères, maximum 30";
+      return false;
+    };
+  }
+
+
 
   //Controle de la validité de l'email
   function emailControle() {
@@ -247,7 +371,8 @@ btnSendFormOrder.addEventListener("click", (e) => {
     if (regExEmail(lEmail)) {
       return true;
     } else {
-      alert("L'adresse mail n'est pas correcte")
+      //alert("L'adresse mail n'est pas correcte")
+      erreurEmail.innerHTML = "L'adresse mail n'est pas correcte";
       return false;
     }
 
@@ -258,7 +383,7 @@ btnSendFormOrder.addEventListener("click", (e) => {
     //Mettre l'objet "formulaireValues" dans le localStorage 
     localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
   } else {
-    alert("Veuillez remplir tous les champs du formulaire");
+    alert("Veuillez vérifier le formulaire");
   }
 
 
@@ -306,7 +431,7 @@ btnSendFormOrder.addEventListener("click", (e) => {
   //Mettre le contenu du formulaire et le produit selectionné dans un objet à envoyer au serveur
 
   const aEnvoyer = {
-    productInLocalStorage,
+    getProductInLocalStorage,
     formulaireValues
   }
 
@@ -359,6 +484,7 @@ const contact = {
 
 
 const products = [
+  "77711f0e466b4ddf953f677d30b0efc9", "77711f0e466b4ddf953f677d30b0efdd"
 
 ];
 console.log(products);
