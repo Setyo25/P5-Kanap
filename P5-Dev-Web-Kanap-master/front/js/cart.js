@@ -322,7 +322,7 @@ btnSendFormOrder.addEventListener("click", (e) => {
   //Const message alert :
 
   const textAlert = (value) => {
-    return `${value}:Les chiffres et les symboles ne sont pas autorisés. Minimum 2 caractères, maximum 30`;
+    return `${value}:Minimum 2 caractères, maximum 30. Les chiffres et les symboles ne sont pas autorisés. `;
   }
 
   const erreurPrenom = document.getElementById("firstNameErrorMsg");
@@ -355,7 +355,7 @@ btnSendFormOrder.addEventListener("click", (e) => {
       return true;
     } else {
       //alert(textAlert("Prenom"));
-      erreurPrenom.innerHTML = "Les chiffres et les symboles ne sont pas autorisés. Minimum 2 caractères, maximum 30";
+      erreurPrenom.innerHTML = "Minimum 2 caractères, maximum 30. Les chiffres et les symboles ne sont pas autorisés. ";
       return false;
     };
   }
@@ -366,7 +366,7 @@ btnSendFormOrder.addEventListener("click", (e) => {
       return true;
     } else {
       //alert(textAlert("Nom"));
-      erreurNom.innerHTML = "Les chiffres et les symboles ne sont pas autorisés. Minimum 2 caractères, maximum 30";
+      erreurNom.innerHTML = "Minimum 2 caractères, maximum 30. Les chiffres et les symboles ne sont pas autorisés. ";
       return false;
     };
   }
@@ -390,7 +390,7 @@ btnSendFormOrder.addEventListener("click", (e) => {
       return true;
     } else {
       //alert(textAlert("Ville"));
-      erreurVille.innerHTML = "Les chiffres et les symboles ne sont pas autorisés. Minimum 2 caractères, maximum 30";
+      erreurVille.innerHTML = "Minimum 2 caractères, maximum 30. Les chiffres et les symboles ne sont pas autorisés. ";
       return false;
     };
   }
