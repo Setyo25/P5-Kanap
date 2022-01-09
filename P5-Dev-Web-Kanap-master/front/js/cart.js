@@ -55,7 +55,7 @@ else {
 
 
 
-//*****************Suppression de produit********************
+// Suppression d'un produit
 function deleteProduct() {
   let buttonSupprimer = document.querySelectorAll(".deleteItem");
 
@@ -70,13 +70,16 @@ function deleteProduct() {
       getProductInLocalStorage = getProductInLocalStorage.filter(el => el.idProduct !== idDelete || el.colorChoice !== colorDelete);
 
       localStorage.setItem("product", JSON.stringify(getProductInLocalStorage));
+
+      //Alerte produit supprimé et refresh
+      //alert("Ce produit a bien été supprimé du panier");
       location.reload();
     })
   }
 }
 deleteProduct();
 
-//*************Modification de quantité de produit*******
+// Modification d'une quantité de produit
 function modifQuantity() {
   let mdfQtt = document.querySelectorAll(".itemQuantity");
 
@@ -84,7 +87,7 @@ function modifQuantity() {
     mdfQtt[m].addEventListener("change", (event) => {
       event.preventDefault();
 
-      //Selection de l'element à modifier en fonction de son id et sa couleur
+      //Selection de l'element à modifier en fonction de son id ET sa couleur
       let quantityModif = getProductInLocalStorage[m].quantity;
       let qttModifValue = mdfQtt[m].valueAsNumber;
 
@@ -94,6 +97,7 @@ function modifQuantity() {
       getProductInLocalStorage[m].quantity = resultFind.quantity;
 
       localStorage.setItem("product", JSON.stringify(getProductInLocalStorage));
+
       // refresh rapide
       location.reload();
     })
@@ -137,6 +141,7 @@ getTotals();
 
 //**************** Formulaire*****************
 
+// AddEventlistener****
 // Selectionner le bouton pour envoyer le formulaire****
 
 const btnSendFormOrder = document.getElementById("order");
@@ -173,6 +178,7 @@ btnSendFormOrder.addEventListener("click", (e) => {
   const erreurEmail = document.getElementById("emailErrorMsg");
 
   //Const regEx***
+
 
   const regExPrenomNomVille = (value) => {
     return /^[A-Za-z]{2,30}$/.test(value);
@@ -255,25 +261,43 @@ btnSendFormOrder.addEventListener("click", (e) => {
     alert("Veuillez vérifier le formulaire");
   }
 
+  const aEnvoyer = {
+    contact: {
+      prenom: document.getElementById("firstName").value,
+      nom: document.getElementById("lastName").value,
+      adresse: document.getElementById("address").value,
+      ville: document.getElementById("city").value,
+      email: document.getElementById("email").value
+    },
+    getProductInLocalStorage
+  };
+  console.log("aEnvoyer");
+
+  //Envoyer l'objet au serveur
+
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(aEnvoyer),
+    headers: {
+      'Accept': 'application/json',
+      "Content-Type": "application/json"
+    },
+  };
+
+  fetch("http://localhost:3000/api/products/order", options)
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+
+
+  })
+
+
   //***************************Fin de validation formularire****************
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
 
 
   //récupération des valeurs du formulaire pour les mettre dans le localstorage
@@ -297,32 +321,32 @@ btnSendFormOrder.addEventListener("click", (e) => {
 
   //Mettre le contenu du formulaire et le produit selectionné dans un objet à envoyer au serveur
 
-  const aEnvoyer = {
-    getProductInLocalStorage,
-    formulaireValues
-  }
+  //const aEnvoyer = {
+  //getProductInLocalStorage,
+  //formulaireValues
 
-  console.log("aEnvoyer");
-  console.log(aEnvoyer);
-})
+
+  //console.log("aEnvoyer");
+  //console.log(aEnvoyer);
+
 
 //---------Mettre le contenu du localstorage dans le formulaire------
 // Prendre la key du local storage et la mettre dans un variable
-const dataLocalStorage = localStorage.getItem("formulaireValues");
+//const dataLocalStorage = localStorage.getItem("formulaireValues");
 
 //Convertir la chaine de caractère en objet javascript
 
-const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
+//const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
 
-console.log("dataLocalStorageObjet");
-console.log(dataLocalStorageObjet);
+//console.log("dataLocalStorageObjet");
+//console.log(dataLocalStorageObjet);
 
 //Mettre les values du localstorage dans les champs du formulaire
-document.getElementById("firstName").value = dataLocalStorageObjet.prenom;
-document.getElementById("lastName").value = dataLocalStorageObjet.nom;
-document.getElementById("address").value = dataLocalStorageObjet.adresse;
-document.getElementById("city").value = dataLocalStorageObjet.ville;
-document.getElementById("email").value = dataLocalStorageObjet.email;
+//document.getElementById("firstName").value = dataLocalStorageObjet.prenom;
+//document.getElementById("lastName").value = dataLocalStorageObjet.nom;
+//document.getElementById("address").value = dataLocalStorageObjet.adresse;
+//document.getElementById("city").value = dataLocalStorageObjet.ville;
+//document.getElementById("email").value = dataLocalStorageObjet.email;
 
 
 //Fonction pour remplir directement le champ du formulaire avec les données du local storage si elles existent
@@ -366,12 +390,3 @@ console.log(products);
 
   //localStorage.setItem("firstName", document.querySelector("firstName").value);
   //localStorage.setItem("lasttName", document.querySelector("lastName").value);
-
-
-
-//});
-
-
-
-
-
