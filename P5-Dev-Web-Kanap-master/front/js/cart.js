@@ -32,7 +32,7 @@ else {
     <div class="cart__item__content">
       <div class="cart__item__content__titlePrice">
         <h2>${product.name}</h2>
-        <p>Prix : ${product.price} €</p>
+        <p>Prix : ${product.price} € / article </p>
         <p>Couleur : ${product.colorChoice}</p>
 
       </div>
