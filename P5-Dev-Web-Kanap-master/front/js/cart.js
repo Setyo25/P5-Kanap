@@ -50,16 +50,12 @@ else {
         
         `;
   }
-  /*
-  if (k == productInLocalStorage.length) {
-    productsInCart.innerHTML = structureProductsCart;
-  }*/
 
 }
 
 
 
-// Suppression d'un produit
+//*****************Suppression de produit********************
 function deleteProduct() {
   let buttonSupprimer = document.querySelectorAll(".deleteItem");
 
@@ -74,16 +70,13 @@ function deleteProduct() {
       getProductInLocalStorage = getProductInLocalStorage.filter(el => el.idProduct !== idDelete || el.colorChoice !== colorDelete);
 
       localStorage.setItem("product", JSON.stringify(getProductInLocalStorage));
-
-      //Alerte produit supprimé et refresh
-      //alert("Ce produit a bien été supprimé du panier");
       location.reload();
     })
   }
 }
 deleteProduct();
 
-// Modification d'une quantité de produit
+//*************Modification de quantité de produit*******
 function modifQuantity() {
   let mdfQtt = document.querySelectorAll(".itemQuantity");
 
@@ -91,7 +84,7 @@ function modifQuantity() {
     mdfQtt[m].addEventListener("change", (event) => {
       event.preventDefault();
 
-      //Selection de l'element à modifier en fonction de son id ET sa couleur
+      //Selection de l'element à modifier en fonction de son id et sa couleur
       let quantityModif = getProductInLocalStorage[m].quantity;
       let qttModifValue = mdfQtt[m].valueAsNumber;
 
@@ -101,7 +94,6 @@ function modifQuantity() {
       getProductInLocalStorage[m].quantity = resultFind.quantity;
 
       localStorage.setItem("product", JSON.stringify(getProductInLocalStorage));
-
       // refresh rapide
       location.reload();
     })
@@ -141,161 +133,10 @@ function getTotals() {
 getTotals();
 
 
-/*
-//*************Recherche remove product*************** 
-
-function getBasket() {
-  return JSON.parse(localStorage.getItem("basket"));
-}
-function removeFromBasket(getProductInLocalStorage) {
-  let basket = getBasket();
-  basket = basket.filter(p => idProduct != optionsProduct.idProduct);
-}
-
-const supprimer = document.querySelector('.deleteItem');
-supprimer.addEventListener("click", removeFromBasket());
-
-
-*/
-/*
-
-function getBasket() {
-  return localStorage.getItem("product");
-}
-console.log(getBasket());
-
-
-function removeFromBasket(product) {
-  let basket = getBasket();
-  basket = basket.filter(p => p.idProduct != product.idProduct);
-  console.log(basket);
-}
-
-
-let remove = document.querySelector(".deleteItem");
-remove.addEventListener("click", function () {
-  removeFromBasket()
-});
-console.log(remove);
-*/
-
-
-// Le montant total du panier****
-
-// créer la variable pour mettre le prix total du panier
-
-
-
-
-
-
-/*
-
-// total quantite dans le panier 
-
-let totalQuantityCalcule = [];
-//function totalQuantityCalcule(productInLocalStorage) {
-//Chercher la quantite dans le panier
-
-for (let n = 0; n < getProductInLocalStorage.length; n++) {
-  let quantityOfProductsInCartString = getProductInLocalStorage[n].quantity;
-  let quantityOfProductsInCart = parseInt(quantityOfProductsInCartString);
-  //total quantite dans le panier
-  totalQuantityCalcule.push(quantityOfProductsInCart)
-  console.log(totalQuantityCalcule);
-
-  // additionner la quantite dans le panier
-  function reducer(accumulator, currentValue) {
-    return accumulator + currentValue;
-  }
-  const totalQuantityProducts = totalQuantityCalcule.reduce(reducer);
-  console.log(totalQuantityProducts);
-
-  let totalQuantityEnd = document.getElementById("totalQuantity");
-  totalQuantityEnd.innerHTML = totalQuantityProducts;
-
-}
-//}
-
-
-
-
-
-
-
-/*
-
-let totalPriceCalcule = [];
-
-//Chercher les prix dans le panier
-
-////function totalPriceProducts(productInLocalStorage) {
-
-for (let m = 0; m < getProductInLocalStorage.length; m++) {
-  let priceOfProductsInCart = getProductInLocalStorage[m].price;
-
-  //total prix dans le panier
-  totalPriceCalcule.push(priceOfProductsInCart)
-  console.log(totalPriceCalcule);
-
-  // additionner les prix dans le panier
-  const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  const totalPriceProducts = totalPriceCalcule.reduce(reducer, 0);
-  console.log(totalPriceProducts);
-
-  let totalPriceEnd = document.getElementById("totalPrice");
-  totalPriceEnd.innerHTML = totalPriceProducts;
-
-
-}
-*/
-//}
-
-// Test pour modifier la quantité***
-
-/*
-const tagQuantity = document.getElementById("itemQuantity");
-
-console.log("ici tagQuantity");
-console.log(tagQuantity);
-
-tagQuantity.forEach(tag => {
-  const tagClosest = tag.closest("article");
-  let modifQuantity = "";
-  const id = tagClosest.dataset.id;
-  const color = tagClosest.dataset.color;
-  console.log("Ici tagClosest");
-  console.log(tagClosest);
-
-  tag.addEventListener('change', event => {
-    event.preventDefault;
-    modifQuantity = Number(tag.value);
-    productInLocalStorage.forEach(product => {
-      if (product.idProduct == id && product.colorChoice == color) {
-        product.quantity = modifQuantity
-      }
-    })
-    localStorage.setItem("products", JSON.stringify(productInLocalStorage));
-    totalPriceEnd(productInLocalStorage);
-    //totalQuantityEnd(productInLocalStorage);
-  })
-})
-*/
-
-
-// Recheche modif quantité
-/*
-const modifQuantity = document.querySelector(".itemQuantity");
-console.log(modifQuantity);
-array.from(modifQuantity).forEach((element) => {
-  console.log(element);
-});
-*/
 
 
 //**************** Formulaire*****************
 
-// AddEventlistener****
 // Selectionner le bouton pour envoyer le formulaire****
 
 const btnSendFormOrder = document.getElementById("order");
@@ -332,7 +173,6 @@ btnSendFormOrder.addEventListener("click", (e) => {
   const erreurEmail = document.getElementById("emailErrorMsg");
 
   //Const regEx***
-
 
   const regExPrenomNomVille = (value) => {
     return /^[A-Za-z]{2,30}$/.test(value);
@@ -395,8 +235,6 @@ btnSendFormOrder.addEventListener("click", (e) => {
     };
   }
 
-
-
   //Controle de la validité de l'email
   function emailControle() {
     const lEmail = formulaireValues.email;
@@ -410,15 +248,12 @@ btnSendFormOrder.addEventListener("click", (e) => {
 
   }
 
-
   if (prenomControle() && nomControle() && emailControle() && villeControle() && adresseControle()) {
     //Mettre l'objet "formulaireValues" dans le localStorage 
     localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
   } else {
     alert("Veuillez vérifier le formulaire");
   }
-
-
 
   //***************************Fin de validation formularire****************
 
