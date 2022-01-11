@@ -145,7 +145,7 @@ getTotals();
 // Selectionner le bouton pour envoyer le formulaire****
 
 const btnSendFormOrder = document.getElementById("order");
-console.log(btnSendFormOrder);
+//console.log(btnSendFormOrder);
 
 btnSendFormOrder.addEventListener("click", (e) => {
   e.preventDefault();
@@ -167,9 +167,9 @@ btnSendFormOrder.addEventListener("click", (e) => {
 
   //Const message alert :
 
-  const textAlert = (value) => {
-    return `${value}:Minimum 2 caractères, maximum 30. Les chiffres et les symboles ne sont pas autorisés. `;
-  }
+  //const textAlert = (value) => {
+  //return `${value}:Minimum 2 caractères, maximum 30. Les chiffres et les symboles ne sont pas autorisés. `;
+  /////}
 
   const erreurPrenom = document.getElementById("firstNameErrorMsg");
   const erreurNom = document.getElementById("lastNameErrorMsg");
@@ -199,6 +199,7 @@ btnSendFormOrder.addEventListener("click", (e) => {
     const lePrenom = formulaireValues.prenom;
     if (regExPrenomNomVille(lePrenom)) {
       return true;
+
     } else {
       //alert(textAlert("Prenom"));
       erreurPrenom.innerHTML = "Minimum 2 caractères, maximum 30. Les chiffres et les symboles ne sont pas autorisés. ";
@@ -254,45 +255,59 @@ btnSendFormOrder.addEventListener("click", (e) => {
 
   }
 
-  if (prenomControle() && nomControle() && emailControle() && villeControle() && adresseControle()) {
-    //Mettre l'objet "formulaireValues" dans le localStorage 
-    localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
-  } else {
-    alert("Veuillez vérifier le formulaire");
-  }
+
+
 
   const aEnvoyer = {
     contact: {
-      prenom: document.getElementById("firstName").value,
-      nom: document.getElementById("lastName").value,
-      adresse: document.getElementById("address").value,
-      ville: document.getElementById("city").value,
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      address: document.getElementById("address").value,
+      city: document.getElementById("city").value,
       email: document.getElementById("email").value
     },
-    getProductInLocalStorage
+    products: ["055743915a544fde83cfdfc904935ee7"]
+
+
   };
   console.log("aEnvoyer");
 
   //Envoyer l'objet au serveur
 
-  const options = {
+  /*const options = {
     method: 'POST',
+    mode: 'cors',
     body: JSON.stringify(aEnvoyer),
     headers: {
       'Accept': 'application/json',
       "Content-Type": "application/json"
     },
   };
+  */
+  if (prenomControle() && nomControle() && emailControle() && villeControle() && adresseControle()) {
+    fetch("http://localhost:3000/api/products/order",
+      {
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify(aEnvoyer),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        document.location.href = "confirmation.html?commande=" + data.orderId
 
-  fetch("http://localhost:3000/api/products/order", options)
-})
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
+      })
+  } else {
+    alert("Veuillez vérifier le formulaire");
+  }
 
 
-  })
-
+});
 
   //***************************Fin de validation formularire****************
 
