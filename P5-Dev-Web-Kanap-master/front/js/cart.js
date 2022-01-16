@@ -1,8 +1,6 @@
 let getProductInLocalStorage = JSON.parse(localStorage.getItem("product"));
 console.log(getProductInLocalStorage);
 
-
-
 // ID où on va injecter HTML
 const productsInCart = document.querySelector("#cart__items");
 //console.log(productsInCart);
@@ -34,7 +32,6 @@ else {
         <h2>${product.name}</h2>
         <p>Prix : ${product.price} € / article </p>
         <p>Couleur : ${product.colorChoice}</p>
-
       </div>
       <div class="cart__item__content__settings">
         <div class="cart__item__content__settings__quantity">
@@ -52,8 +49,6 @@ else {
   }
 
 }
-
-
 
 // Suppression d'un produit
 function deleteProduct() {
@@ -135,9 +130,6 @@ function getTotals() {
   console.log(totalPrice);
 }
 getTotals();
-
-
-
 
 //**************** Formulaire*****************
 
@@ -255,8 +247,15 @@ btnSendFormOrder.addEventListener("click", (e) => {
 
   }
 
+  //Envoyer l'objet au serveur
 
+  let idProd = [];
 
+  for (let d = 0; d < getProductInLocalStorage.length; d++) {
+    idProd.push(getProductInLocalStorage[d].idProduct);
+  }
+  console.log("idProd");
+  console.log(idProd);
 
   const aEnvoyer = {
     contact: {
@@ -266,24 +265,11 @@ btnSendFormOrder.addEventListener("click", (e) => {
       city: document.getElementById("city").value,
       email: document.getElementById("email").value
     },
-    products: ["055743915a544fde83cfdfc904935ee7"]
-
+    products: idProd
 
   };
   console.log("aEnvoyer");
 
-  //Envoyer l'objet au serveur
-
-  /*const options = {
-    method: 'POST',
-    mode: 'cors',
-    body: JSON.stringify(aEnvoyer),
-    headers: {
-      'Accept': 'application/json',
-      "Content-Type": "application/json"
-    },
-  };
-  */
   if (prenomControle() && nomControle() && emailControle() && villeControle() && adresseControle()) {
     fetch("http://localhost:3000/api/products/order",
       {
@@ -299,109 +285,11 @@ btnSendFormOrder.addEventListener("click", (e) => {
       })
       .then((data) => {
         console.log(data);
-        document.location.href = "confirmation.html?commande=" + data.orderId
+        document.location.href = "confirmation.html?commande=" + data.orderId;
 
       })
   } else {
     alert("Veuillez vérifier le formulaire");
   }
 
-
 });
-
-  //***************************Fin de validation formularire****************
-
-
-/*
-
-
-  //récupération des valeurs du formulaire pour les mettre dans le localstorage
-  //localStorage.setItem("firstName", document.getElementById("firstName").value);
-  //console.log(document.getElementById("firstName").value);
-  //localStorage.setItem("lastName", document.getElementById("lastName").value);
-  //localStorage.setItem("address", document.getElementById("address").value);
-  //localStorage.setItem("city", document.getElementById("city").value);
-  //localStorage.setItem("email", document.getElementById("email").value);
-
-  //Mettre les values du formulaire dans un objet
-  //const formulaire = {
-  //prenom: localStorage.getItem("firstName"),
-  //nom: localStorage.getItem("lastName"),
-  //adresse: localStorage.getItem("address"),
-  //ville: localStorage.getItem("city"),
-  //email: localStorage.getItem("email"),
-  //}
-  //console.log("formulaire");
-  //console.log(formulaire);
-
-  //Mettre le contenu du formulaire et le produit selectionné dans un objet à envoyer au serveur
-
-  //const aEnvoyer = {
-  //getProductInLocalStorage,
-  //formulaireValues
-
-
-  //console.log("aEnvoyer");
-  //console.log(aEnvoyer);
-
-
-//---------Mettre le contenu du localstorage dans le formulaire------
-// Prendre la key du local storage et la mettre dans un variable
-//const dataLocalStorage = localStorage.getItem("formulaireValues");
-
-//Convertir la chaine de caractère en objet javascript
-
-//const dataLocalStorageObjet = JSON.parse(dataLocalStorage);
-
-//console.log("dataLocalStorageObjet");
-//console.log(dataLocalStorageObjet);
-
-//Mettre les values du localstorage dans les champs du formulaire
-//document.getElementById("firstName").value = dataLocalStorageObjet.prenom;
-//document.getElementById("lastName").value = dataLocalStorageObjet.nom;
-//document.getElementById("address").value = dataLocalStorageObjet.adresse;
-//document.getElementById("city").value = dataLocalStorageObjet.ville;
-//document.getElementById("email").value = dataLocalStorageObjet.email;
-
-
-//Fonction pour remplir directement le champ du formulaire avec les données du local storage si elles existent
-
-//function remplirChampInputDepuisLocalStorage(input) {
-  //document.getElementById(`${input}`).value = dataLocalStorageObjet[input];
-//};
-
-//console.log("remplirchamp");
-//console.log(remplirChampInputDepuisLocalStorage);
-//remplirChampInputDepuisLocalStorage("prenom");
-
-
-
-
-
-
-/*
-const contact = {
-  firstName: "Heri",
-  lastName: "Setyobudi",
-  address: "2 Rue de Paname",
-  city: "Paris",
-  email: "hstybd@gmail.com"
-}
-
-
-const products = [
-  "77711f0e466b4ddf953f677d30b0efc9", "77711f0e466b4ddf953f677d30b0efdd"
-
-];
-console.log(products);
-products.push("chat")
-console.log(products);
-products.push("chien");
-console.log(products);
-*/
-
-//btnSendFormOrder.addEventListener("click", (e) => {
-  //e.preventDefault();
-
-  //localStorage.setItem("firstName", document.querySelector("firstName").value);
-  //localStorage.setItem("lasttName", document.querySelector("lastName").value);
